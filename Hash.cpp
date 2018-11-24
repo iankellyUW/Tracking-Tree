@@ -27,13 +27,14 @@ Hash::Hash(string toHash)
 	}
 	else {
 		for (unsigned i = 0; i < toHash.size(); i++) {
-			hashval[i] = (int)toHash[i] % 62;
+			hashval[i] = SET[(int)(toHash[i] % 62)];
 		}
 	}
 	cout << "hashval: ";
 	for (unsigned i = 0; i < 8;  i++) {
 		cout << hashval[i];
 	}
+	cout << endl;
 }
 
 
