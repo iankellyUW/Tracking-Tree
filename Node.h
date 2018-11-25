@@ -10,8 +10,13 @@ public:
 	string ID = NULL;
 	string PID = NULL;
 	string EVENT = NULL;
-	string LHASH = NULL;
-	string RHASH = NULL;
+	Hash RHASH();
+	Hash LHASH();
+	vector<Hash> LHIST;
+	vector<Hash> RHIST;
+	Node();
+	~Node();
+
 private:
 	Node *left;
 	Node *right;

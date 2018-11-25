@@ -6,6 +6,7 @@ class Hash
 {
 	char getChar(string subset);
 	char hashval[8] = { '0', '0', '0', '0', '0', '0', '0', '0'};
+	void getHash(string toHash);
 
 public:
 	static constexpr char SET[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b','c', 'd', 'e', 'f','g', 'h', 'i', 'j', 'k', 
@@ -13,6 +14,7 @@ public:
 		'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 	static const int hashSize = 8;
 	Hash(string toHash);
+	Hash();
 	~Hash();
 };
 

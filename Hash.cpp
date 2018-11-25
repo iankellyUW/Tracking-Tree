@@ -5,6 +5,27 @@
 using namespace std;
 
 
+
+Hash::Hash(string toHash)
+{
+	getHash(toHash);
+	cout << "hashval: ";
+	for (int i = 0; i < 8; i++) {
+		cout << hashval[i];
+	}
+	cout << endl;
+}
+
+Hash::Hash() {
+	
+}
+
+Hash::~Hash()
+{
+
+}
+
+
 char Hash::getChar(string subset)
 {
 	int total = 0;
@@ -15,8 +36,7 @@ char Hash::getChar(string subset)
 	return SET[pos];
 }
 
-Hash::Hash(string toHash)
-{
+void Hash::getHash(string toHash) {
 	unsigned subSize = (toHash.size() > hashSize) ? toHash.size() / hashSize : 1;
 	unsigned lastSubSize = (((toHash.size() % subSize) + (subSize * hashSize)) == toHash.size()) ? subSize + (toHash.size() % subSize) : subSize - (toHash.size() % subSize);
 	if (subSize != 1) {
@@ -30,15 +50,5 @@ Hash::Hash(string toHash)
 			hashval[i] = SET[(int)(toHash[i] % 62)];
 		}
 	}
-	cout << "hashval: ";
-	for (unsigned i = 0; i < 8;  i++) {
-		cout << hashval[i];
-	}
-	cout << endl;
-}
-
-
-Hash::~Hash()
-{
-
+	return;
 }
