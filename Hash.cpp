@@ -6,6 +6,17 @@ using namespace std;
 
 
 
+
+
+Hash::Hash() {
+	
+}
+
+Hash::~Hash()
+{
+
+}
+
 Hash::Hash(string toHash)
 {
 	getHash(toHash);
@@ -17,16 +28,6 @@ Hash::Hash(string toHash)
 	cout << endl;
 	//End test
 }
-
-Hash::Hash() {
-	
-}
-
-Hash::~Hash()
-{
-
-}
-
 
 char Hash::getChar(string subset)
 {
