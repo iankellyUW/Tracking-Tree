@@ -12,12 +12,13 @@ public:
 	string EVENT = NULL;
 	Hash RHASH();
 	Hash LHASH();
-	vector<Hash> LHIST;
-	vector<Hash> RHIST;
+	vector<Hash> LHIST; //should probably change to a list
+	vector<Hash> RHIST; //should probably change to a list
 	Node();
 	~Node();
 
 private:
+	Node *parent;
 	Node *left;
 	Node *right;
 };
