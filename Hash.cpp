@@ -9,8 +9,9 @@ using namespace std;
 Hash::Hash(string toHash)
 {
 	getHash(toHash);
+	//Test: retrieves hashval and outputs it too console
 	cout << "hashval: ";
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < HASH_SIZE; i++) {
 		cout << hashval[i];
 	}
 	cout << endl;
@@ -47,7 +48,7 @@ void Hash::getHash(string toHash) {
 	}
 	else {
 		for (unsigned i = 0; i < toHash.size(); i++) {
-			hashval[i] = SET[(int)(toHash[i] % 62)];
+			hashval[i] = SET[(int)(toHash[i] % SET_SIZE)];
 		}
 	}
 	return;
