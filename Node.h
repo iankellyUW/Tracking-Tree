@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include "Hash.h"
 using namespace std;
 
 #ifndef NODE_H_
@@ -7,17 +8,16 @@ using namespace std;
 
 class Node {
 public:
-	string ID = NULL;
-	string PID = NULL;
-	string EVENT = NULL;
+	Node(string rawEvent);
+	~Node();
+private:
+	string ID;
+	string PID;
+	string EVENT;
 	Hash RHASH();
 	Hash LHASH();
 	vector<Hash> LHIST; //should probably change to a list
 	vector<Hash> RHIST; //should probably change to a list
-	Node();
-	~Node();
-
-private:
 	Node *parent;
 	Node *left;
 	Node *right;
