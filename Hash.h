@@ -1,11 +1,14 @@
 #pragma once
 #include <string>
 #include <iostream>
+
+#define HASH_SIZE 8
+#define SET_SIZE 62
 using namespace std;
 class Hash
 {
 	char getChar(string subset);
-	char hashval[8] = { '0', '0', '0', '0', '0', '0', '0', '0'};
+	char hashval[HASH_SIZE] = { '0', '0', '0', '0', '0', '0', '0', '0'};
 	void getHash(string toHash);
 
 public:
