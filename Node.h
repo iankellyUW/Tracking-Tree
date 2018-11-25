@@ -1,5 +1,5 @@
 #include <string>
-#include <vector>
+#include <list>
 #include "Hash.h"
 using namespace std;
 
@@ -8,6 +8,11 @@ using namespace std;
 
 class Node {
 public:
+	Hash getLHash();
+	Hash getRHash();
+	Hash getID();
+	void appendLHist();
+	void appendRHist();
 	Node(string rawEvent);
 	~Node();
 private:
@@ -16,8 +21,8 @@ private:
 	string EVENT;
 	Hash RHASH();
 	Hash LHASH();
-	vector<Hash> LHIST; //should probably change to a list
-	vector<Hash> RHIST; //should probably change to a list
+	list<Hash> LHIST; 
+	list<Hash> RHIST; 
 	Node *parent;
 	Node *left;
 	Node *right;
