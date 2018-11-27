@@ -56,8 +56,6 @@ protected:
 		{
 			string parentEvent = rawEvent + parentID_.getHashval();
 			ID_.getHash(parentEvent);
-
-
 		}
 
 		// NOTE: The standard BinaryNode destructor code does
