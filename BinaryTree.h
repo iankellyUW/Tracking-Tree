@@ -322,15 +322,21 @@ BinaryTree::postorder() const
 }
 
 BinaryTree::BinaryNode* BinaryTree::findSlot(BinaryNode * node) {
-	if(node->left_ != NULL && node->right_ != NULL){
-		long hl = height(node->left_);
-		long hr = height(node->right_);
-		node = (hl > hr) ? node->right_ : node->left_;
-	}
-	else {
+	if (node->left_ != NULL && node->right_ == NULL) {
 		return node;
 	}
-	
+	if (node->left_ != NULL && node->right_ != NULL) {
+		node = findSlot(node->right_);
+		BinaryNode * nodel = findSlot(node->left);
+		if (node == NULL && nodel != NULL) {
+			return findSlot(node->left_);
+		}
+		if (node == NULL && nodel == NULL) {
+			return node;
+		}
+	} else {
+		return NULL;
+	}
 }
 
 // code for helper functions
