@@ -334,7 +334,7 @@ BinaryTree::buildRandom(long size, BinaryNode * & subtree)
 	{
 		subtree = new BinaryNode(btEntry_);
 		btEntry_++;
-		long leftSize = randInt(0, size);
+		long leftSize = 0;
 		buildRandom(leftSize, subtree->left_);
 		long rightSize = size - 1 - leftSize;
 		buildRandom(rightSize, subtree->right_);

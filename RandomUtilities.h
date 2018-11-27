@@ -33,85 +33,8 @@ void randomizeSeed()
 	}
 }
 
-
-// Return a random variate distributed uniformly between
-// zero and one.  All doubles in this range are 
-// approximately equally likely.
-// 0 <= r < 1
-double randUniform()
-{
-   double r = double( rand() ) / ( RAND_MAX + 1.0 );
-   r = ( double( rand() ) + r ) / ( RAND_MAX + 1.0 );
-   r = ( double( rand() ) + r ) / ( RAND_MAX + 1.0 );
-   r = ( double( rand() ) + r ) / ( RAND_MAX + 1.0 );
-	return  r;
-};
-
-
-// Return a random variate distributed uniformly on the
-// range minReal upto, not including, maxReal.
-// minReal is assumed < maxReal.
-double randReal( double minReal, double maxReal )
-{
-	return minReal 
-		+ ( maxReal - minReal ) * randUniform();
-}
-
-
-// Return a random variate distributed uniformly on the
-// range minInt upto, not including, maxInt.
-// minInt is assumed < maxInt.
-int randInt( int minInt, int maxInt )
-{
-	return int( minInt 
-		+ ( maxInt - minInt ) * randUniform() );
-}
-
-
-// Return a random variate from the exponential
-// distribution with mean one.
-double randExpon()
-{
-	double unif = randUniform();
-	double expon = -log( unif );
-	return expon;
-}
-
-
-// Return a random variate from the triangle distribution 
-// with the minimum, most likely, and maximum values given
-// by the three parameters.
-double randTriangle( double minimum, double mode, double maximum )
-{
-   double larger( randUniform() );
-   double other( randUniform() );
-   if( larger < other )
-   {
-      larger = other;
-   }
-
-	if( randUniform() * ( maximum - minimum ) < ( mode - minimum ) )
-	{
-		return minimum + larger * ( mode - minimum );
-	}
-	else
-	{
-		return maximum + larger * ( mode - maximum );
-	}
-}
-
-
-// Return a random variate from the Erlang ( sum of k 
-// exponential samples ) distribution.  The mean of the 
-// distribution is k.
-double randErlang( short k )
-{
-	double sum = 0.0;
-	for( short i=0; i<k; i++ )
-	{
-		sum += randExpon();
-	}
-	return sum / double( k );
+char getChar() {
+	return 'x';
 }
 
 #endif
