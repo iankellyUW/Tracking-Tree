@@ -110,16 +110,16 @@ public:
 
 	long leaves() const;
 
-	// pre:  this BinaryTree is not empty.
-	short leftmost() const;
+
+	BinaryNode * leftmost() const;
 
 	std::vector< short > preorder() const;
 
 	std::vector< short > postorder() const;
 	
 	BinaryNode * findSlot() const;
-
-	int depth() const;
+	int rightHeight() const;
+	int leftHeight() const;
 
 private:
 	BinaryNode * tree_;
@@ -190,7 +190,7 @@ private:
 	// pre:  this BinaryTree subtree is not empty.
 	// Return the value in the leftmost node in the tree 
 	//   accessed by subtree.
-	static short leftmost(const BinaryNode * subtree);
+	static BinaryNode * leftmost(BinaryNode * subtree);
 
 
 	// Write the values stored in the tree accessed by
@@ -203,6 +203,9 @@ private:
 		const BinaryNode * subtree);
 
 	static BinaryNode * findSlot(BinaryNode * subtree);
+	static int rightHeight(BinaryNode * subtree);
+	static int leftHeight(BinaryNode * subtree);
+
 };
 
 
@@ -275,12 +278,22 @@ BinaryTree::height() const
 	return  height(tree_);
 }
 
+int BinaryTree::rightHeight() const {
+	return rightHeight(tree_);
+}
+
+int BinaryTree::leftHeight() const {
+	return leftHeight(tree_);
+}
 long
 BinaryTree::size() const
 {
 	return  size(tree_);
 }
 
+BinaryTree::BinaryNode * BinaryTree::findSlot() const {
+	return findSlot(tree_);
+}
 
 long
 BinaryTree::leaves() const
@@ -289,8 +302,7 @@ BinaryTree::leaves() const
 }
 
 
-short
-BinaryTree::leftmost() const
+BinaryTree::BinaryNode * BinaryTree::leftmost() const
 {
 	return  leftmost(tree_);
 }
@@ -313,6 +325,10 @@ BinaryTree::postorder() const
 }
 
 BinaryTree::BinaryNode* BinaryTree::findSlot(BinaryNode * node) {
+	if (rightHeight(node) == leftHeight(node)) {
+		return leftmost(node);
+	}
+	
 	if (node->left_ != NULL && node->right_ == NULL) {
 		return node;
 	}
@@ -327,6 +343,28 @@ BinaryTree::BinaryNode* BinaryTree::findSlot(BinaryNode * node) {
 		}
 	} else {
 		return NULL;
+	}
+}
+
+int BinaryTree::rightHeight(BinaryNode * subtree) {
+	int height = 0;
+	if (subtree != NULL) {
+		height = 1;
+		height += rightHeight(subtree->right_);
+	}
+	else {
+		return height;
+	}
+}
+
+int BinaryTree::leftHeight(BinaryNode * subtree) {
+	int height = 0;
+	if (subtree != NULL) {
+		height = 1;
+		height += rightHeight(subtree->left_);
+	}
+	else {
+		return height;
 	}
 }
 
@@ -471,14 +509,13 @@ BinaryTree::leaves(const BinaryNode * subtree)
 }
 
 
-short
-BinaryTree::leftmost(const BinaryNode * subtree)
+BinaryTree::BinaryNode * BinaryTree::leftmost(BinaryNode * subtree)
 {
 	if (subtree->left_ != NULL) {
 		leftmost(subtree->left_);
 	}
 	else {
-		return subtree->entry_;
+		return subtree;
 	}
 }
 
