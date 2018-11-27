@@ -15,11 +15,13 @@
 
 
 #include "RandomUtilities.h"
+#include "Hash.h"
 
 #include <iostream>
 #include <string>
 #include <vector>
 #include <queue>
+
 
 
 //***  Binary Tree class  ***//
@@ -36,7 +38,10 @@ protected:
 	class BinaryNode
 	{
 	public:
-		short entry_;
+		std::string entry_;
+		Hash ParentID_;
+		Hash ID_;
+
 		BinaryNode * left_;
 		BinaryNode * right_;
 
