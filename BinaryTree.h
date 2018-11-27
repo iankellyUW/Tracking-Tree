@@ -116,8 +116,10 @@ public:
 	std::vector< short > preorder() const;
 
 	std::vector< short > postorder() const;
+	
+	BinaryNode * findSlot() const;
 
-	BinaryNode * findSlot(BinaryNode * node);
+	int depth() const;
 
 private:
 	BinaryNode * tree_;
@@ -199,6 +201,9 @@ private:
 
 	static void postorder(std::vector< short > & traversal,
 		const BinaryNode * subtree);
+
+	static BinaryNode * findSlot(BinaryNode * subtree);
+	static int depth(BinaryNode * subtree);
 };
 
 
@@ -271,6 +276,13 @@ BinaryTree::height() const
 	return  height(tree_);
 }
 
+int BinaryTree::depth() const {
+	return depth(tree_);
+}
+
+int BinaryTree::depth(BinaryNode * node) {
+
+}
 
 long
 BinaryTree::size() const
