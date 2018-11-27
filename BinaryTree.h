@@ -275,7 +275,6 @@ BinaryTree::height() const
 	return  height(tree_);
 }
 
-
 long
 BinaryTree::size() const
 {
