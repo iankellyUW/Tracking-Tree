@@ -2,6 +2,6 @@
 
 
 Collaborators:
-William Cary
-Justin Blakeman
+William Cary,
+Justin Blakeman,
 Ian Kelly
