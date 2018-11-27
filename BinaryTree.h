@@ -38,7 +38,7 @@ protected:
 	class BinaryNode
 	{
 	public:
-		std::string entry_;
+		short entry_;
 		Hash ParentID_;
 		Hash ID_;
 
