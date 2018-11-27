@@ -117,9 +117,7 @@ public:
 
 	std::vector< short > postorder() const;
 
-	BinaryNode * findSlot() {
-
-	}
+	BinaryNode * findSlot(BinaryNode * node);
 
 private:
 	BinaryNode * tree_;
@@ -311,6 +309,17 @@ BinaryTree::postorder() const
 	return traversal;
 }
 
+BinaryTree::BinaryNode* BinaryTree::findSlot(BinaryNode * node) {
+	if(node->left_ != NULL && node->right_ != NULL){
+		long hl = height(node->left_);
+		long hr = height(node->right_);
+		node = (hl > hr) ? node->right_ : node->left_;
+	}
+	else {
+		return node;
+	}
+	
+}
 
 // code for helper functions
 
