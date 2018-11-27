@@ -39,20 +39,23 @@ protected:
 	{
 	public:
 		short entry_;
-		Hash ParentID_;
+		string rawEvent_;
+		Hash parentID_;
 		Hash ID_;
+		Hash lHash_;
+		Hash rHash_;
+		vector<Hash> rHist;
+		vector<Hash> lHist;
 
 		BinaryNode * left_;
 		BinaryNode * right_;
 
 	public:
-		BinaryNode(short entry = 0,
-			BinaryNode* left = NULL,
-			BinaryNode* right = NULL)
-			: entry_(entry),
-			left_(left),
-			right_(right)
-		{ }
+		BinaryNode(Hash parentID, string rawEvent, short entry = 0, BinaryNode* left = NULL, BinaryNode* right = NULL)
+			: entry_(entry), left_(left), right_(right), parentID_(parentID), rawEvent_(rawEvent)
+		{
+			
+		}
 
 		// NOTE: The standard BinaryNode destructor code does
 		//   NOT delete BinaryNodes in the subtrees of left_ or right_.
@@ -326,7 +329,7 @@ BinaryTree::destroy(BinaryNode * & subtree)
 void
 BinaryTree::buildRandom(long size, BinaryNode * & subtree)
 {
-	if (size == 0)
+	/*if (size == 0)
 	{
 		subtree = NULL;
 	}
@@ -338,7 +341,7 @@ BinaryTree::buildRandom(long size, BinaryNode * & subtree)
 		buildRandom(leftSize, subtree->left_);
 		long rightSize = size - 1 - leftSize;
 		buildRandom(rightSize, subtree->right_);
-	}
+	}*/
 }
 
 
