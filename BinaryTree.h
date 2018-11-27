@@ -117,6 +117,9 @@ public:
 
 	std::vector< short > postorder() const;
 
+	BinaryNode * findSlot() {
+
+	}
 
 private:
 	BinaryNode * tree_;
