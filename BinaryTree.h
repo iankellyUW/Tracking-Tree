@@ -240,8 +240,8 @@ BinaryTree:: ~BinaryTree()
 void
 BinaryTree::build(long size)
 {
-	destroy(tree_);
-	buildRandom(size, tree_);
+	BinaryTree create;
+	tree_->left_ = create.tree_;
 }
 
 
