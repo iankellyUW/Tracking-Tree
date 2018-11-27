@@ -280,10 +280,6 @@ int BinaryTree::depth() const {
 	return depth(tree_);
 }
 
-int BinaryTree::depth(BinaryNode * node) {
-
-}
-
 long
 BinaryTree::size() const
 {
@@ -321,14 +317,26 @@ BinaryTree::postorder() const
 	return traversal;
 }
 
-BinaryTree::BinaryNode* BinaryTree::findSlot(BinaryNode * node) {
-	if(node->left_ != NULL && node->right_ != NULL){
-		long hl = height(node->left_);
-		long hr = height(node->right_);
-		node = (hl > hr) ? node->right_ : node->left_;
+int BinaryTree::depth(BinaryNode * node) {
+	int hl, hr;
+	if (node->left_ != NULL && node->right_ != NULL) {
+		hl = 1;
+		hr = 1;
+		hl += depth(node->left_);
+		hr += depth(node->right_);
 	}
 	else {
-		return node;
+		return (hl > hr) ? hr : hl;
+	}
+}
+
+BinaryTree::BinaryNode* BinaryTree::findSlot(BinaryNode * node) {
+	if (node->left_ != NULL && node->right_ != NULL) {
+	//	int hl = node)
+		return;
+	}
+	else {
+		return;
 	}
 	
 }
