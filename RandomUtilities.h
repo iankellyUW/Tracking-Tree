@@ -16,7 +16,7 @@
 #include <cmath>
 #include <ctime>
 #include <algorithm>
-
+#include "Hash.h"
 
 // Seed the random-number generator with current time so that
 // the numbers will be different every time we run.
@@ -33,8 +33,12 @@ void randomizeSeed()
 	}
 }
 
-char getChar() {
-	return 'x';
+string getString() {
+	int stringSize = rand() % 1024;
+	string entry = "";
+	for (unsigned i = 0; i < stringSize; i++) {
+		entry += SET[rand() % SET_SIZE];
+	}
+	return entry;
 }
-
 #endif

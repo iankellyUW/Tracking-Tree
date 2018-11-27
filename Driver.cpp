@@ -1,5 +1,7 @@
 #include "Hash.h"
 #include "BinaryTree.h"
+#include "RandomUtilities.h"
+
 //#include "BinaryTreeDriver.h"
 #include <iostream>
 using std::cout;
@@ -23,6 +25,10 @@ int main() {
 	Hash char17Test1("The Big Duck is ");
 	Hash char17Test2("the big duck is.");
 	randomizeSeed();
+	
+	cout << "random string 1: " << getString() << endl;
+	cout << "random string 2: " << getString() << endl;
+
 
 	BinaryTree theTree;
 
