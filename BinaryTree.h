@@ -203,7 +203,6 @@ private:
 		const BinaryNode * subtree);
 
 	static BinaryNode * findSlot(BinaryNode * subtree);
-	static int depth(BinaryNode * subtree);
 };
 
 
@@ -276,13 +275,6 @@ BinaryTree::height() const
 	return  height(tree_);
 }
 
-int BinaryTree::depth() const {
-	return depth(tree_);
-}
-
-int BinaryTree::depth(BinaryNode * node) {
-
-}
 
 long
 BinaryTree::size() const
@@ -327,7 +319,7 @@ BinaryTree::BinaryNode* BinaryTree::findSlot(BinaryNode * node) {
 	}
 	if (node->left_ != NULL && node->right_ != NULL) {
 		node = findSlot(node->right_);
-		BinaryNode * nodel = findSlot(node->left);
+		BinaryNode * nodel = findSlot(node->left_);
 		if (node == NULL && nodel != NULL) {
 			return findSlot(node->left_);
 		}
