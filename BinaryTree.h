@@ -54,7 +54,10 @@ protected:
 		BinaryNode(Hash parentID, string rawEvent, short entry = 0, BinaryNode* left = NULL, BinaryNode* right = NULL)
 			: entry_(entry), left_(left), right_(right), parentID_(parentID), rawEvent_(rawEvent)
 		{
-			
+			string parentEvent = rawEvent + parentID_.getHashval();
+			ID_.getHash(parentEvent);
+
+
 		}
 
 		// NOTE: The standard BinaryNode destructor code does

@@ -14,11 +14,11 @@ class Hash
 {
 	char getChar(string subset);
 	char hashval[HASH_SIZE] = { '0', '0', '0', '0', '0', '0', '0', '0'};
-	void getHash(string toHash);
 	const Hash & operator=(const Hash &);
 
 public:
-	
+	string getHashval();
+	void getHash(string toHash);
 	Hash(string toHash);
 	Hash();
 	~Hash();

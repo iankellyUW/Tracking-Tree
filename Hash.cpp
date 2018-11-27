@@ -38,6 +38,11 @@ char Hash::getChar(string subset)
 	return SET[total % SET_SIZE];
 }
 
+string Hash::getHashval()
+{
+	return hashval;
+}
+
 void Hash::getHash(string toHash) {
 	unsigned subSize = (toHash.size() > HASH_SIZE) ? toHash.size() / HASH_SIZE : 1; //determines whether the substring size is gonna be greater than 1 or 1
 	//lastSubSize: find the subsize * HASH_SIZE add the remainder of the toHash size divided by it and see if == toHash size? yes: than add subsize plus the remainder to get lastSubSize otherwise substract
