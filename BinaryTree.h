@@ -52,8 +52,8 @@ protected:
 		BinaryNode * parent_;
 
 	public:
-		BinaryNode(Hash parentID, string rawEvent, BinaryNode* left = NULL, BinaryNode* right = NULL) 
-			: left_(left), right_(right), parentID_(parentID), rawEvent_(rawEvent)
+		BinaryNode(Hash parentID, string rawEvent, BinaryNode* parent, BinaryNode* left = NULL, BinaryNode* right = NULL)
+			: left_(left), right_(right), parentID_(parentID), rawEvent_(rawEvent), parent_(parent)
 		{
 			string parentEvent = rawEvent + parentID_.getHashval();
 			ID_.getHash(parentEvent);
@@ -88,7 +88,7 @@ public:
 	//   shaped tree of size nodes.  Node entries are
 	//   successive shorts stored in the tree in
 	//   preorder.
-	//void addNode(string dataEvent);
+	void addNode(string dataEvent);
 
 	void build(long levels);
 
@@ -242,14 +242,14 @@ BinaryTree:: ~BinaryTree()
 //   entire tree, so they are declared static, meaning the
 //   object pointer passed to non-static methods is not 
 //   passed to these helper methods.
-
+	
 
 // Build a randomly shaped tree of size nodes.
-//void
-//BinaryTree::addNode(string dataEvent)
-//{
-//	BinaryNode * newNode = new BinaryNode();
-//}
+void BinaryTree::addNode(string dataEvent)
+{
+	BinaryNode * parent = findSlot(tree_);
+	BinaryNode * newNode = new BinaryNode(tree_->ID_, dataEvent, parent);
+}
 
 void
 BinaryTree::build(long levels)
@@ -257,8 +257,8 @@ BinaryTree::build(long levels)
 	for (long lev = 0; lev <= levels; lev++)
 	{
 		BinaryNode * parent = findSlot(tree_);
-		BinaryNode * lNode = new BinaryNode(parent->ID_, getString());
-		BinaryNode * rNode = new BinaryNode(parent->ID_, getString());
+		BinaryNode * lNode = new BinaryNode(parent->ID_, getString(), parent);
+		BinaryNode * rNode = new BinaryNode(parent->ID_, getString(), parent);
 		parent->left_ = lNode;
 		parent->right_ = rNode;
 	}
