@@ -249,6 +249,7 @@ void
 BinaryTree::addNode(string dataEvent)
 {
 	BinaryTree create;
+	BinaryNode * newNode = new BinaryNode()
 	create.tree_->parent_ = tree_;
 	tree_->left_ = create.tree_;
 }
@@ -327,7 +328,7 @@ BinaryTree::postorder() const
 	return traversal;
 }
 
-BinaryTree::BinaryNode* BinaryTree::findSlot(BinaryNode * node) {
+BinaryTree::BinaryNode * BinaryTree::findSlot(BinaryNode * node) {
 	if (rightHeight(node) == leftHeight(node)) {
 		return leftmost(node);
 	}
