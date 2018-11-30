@@ -257,7 +257,7 @@ void
 BinaryTree::build(long levels)
 {
 	if (tree_ == NULL) {
-		Hash id;
+		Hash id("");
 		BinaryNode * tree = new BinaryNode(id, getString(), NULL);
 		tree_ = tree;
 	}
@@ -291,7 +291,7 @@ BinaryTree::display(std::ostream& outfile) const
 	else
 	{
 		displayLeft(outfile, tree_->left_, "    ");
-		outfile << "---" << tree_->rawEvent_ << std::endl;
+		outfile << "---" << tree_->ID_.getHashval() << std::endl;
 		displayRight(outfile, tree_->right_, "    ");
 	}
 }
@@ -359,6 +359,9 @@ BinaryTree::postorder() const
 }
 
 BinaryTree::BinaryNode * BinaryTree::findSlot(BinaryNode * node) {
+	if (node->left_ == NULL && node->right_ == NULL) {
+		return node;
+	}
 	if (rightHeight(node) == leftHeight(node)) {
 		return leftmost(node);
 	}
@@ -366,17 +369,8 @@ BinaryTree::BinaryNode * BinaryTree::findSlot(BinaryNode * node) {
 	if (node->left_ != NULL && node->right_ == NULL) {
 		return node;
 	}
-	if (node->left_ != NULL && node->right_ != NULL) {
-		node = findSlot(node->right_);
-		BinaryNode * nodel = findSlot(node->left_);
-		if (node == NULL && nodel != NULL) {
-			return findSlot(node->left_);
-		}
-		if (node == NULL && nodel == NULL) {
-			return node;
-		}
-	} else {
-		return NULL;
+	if (rightHeight(node) < leftHeight(node)) {
+		findSlot(node->right_);
 	}
 }
 
@@ -395,7 +389,7 @@ int BinaryTree::leftHeight(BinaryNode * subtree) {
 	int height = 0;
 	if (subtree != NULL) {
 		height = 1;
-		height += rightHeight(subtree->left_);
+		height += leftHeight(subtree->left_);
 	}
 	else {
 		return height;
@@ -454,7 +448,7 @@ BinaryTree::displayLeft(std::ostream & outfile,
 	else
 	{
 		displayLeft(outfile, subtree->left_, prefix + "     ");
-		outfile << prefix + "/---" << subtree->rawEvent_ << std::endl;
+		outfile << prefix + "/---" << subtree->ID_.getHashval() << std::endl;
 		displayRight(outfile, subtree->right_, prefix + "|    ");
 	}
 }
@@ -475,7 +469,7 @@ BinaryTree::displayRight(std::ostream & outfile,
 	else
 	{
 		displayLeft(outfile, subtree->left_, prefix + "|    ");
-		outfile << prefix + "\\---" << subtree->rawEvent_ << std::endl;
+		outfile << prefix + "\\---" << subtree->ID_.getHashval() << std::endl;
 		displayRight(outfile, subtree->right_, prefix + "     ");
 	}
 }
