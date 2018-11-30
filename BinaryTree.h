@@ -6,15 +6,7 @@
 */
 #ifndef _BIN_TREE_H_
 #define _BIN_TREE_H_
-/**
-**leftmost()
-**rightmost()
-**rightHeight()
-**leftHeight()
-**preorder()
-**postorder()
-**leaves()
-**/
+
 
 #include "RandomUtilities.h"
 #include "Hash.h"
