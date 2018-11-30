@@ -249,7 +249,6 @@ void
 BinaryTree::addNode(string dataEvent)
 {
 	BinaryTree create;
-	BinaryNode * newNode = new BinaryNode()
 	create.tree_->parent_ = tree_;
 	tree_->left_ = create.tree_;
 }
