@@ -14,7 +14,7 @@ Hash::Hash() {
 
 Hash::~Hash()
 {
-	destroy();
+
 }
 
 Hash::Hash(string toHash)
