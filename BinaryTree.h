@@ -359,19 +359,17 @@ BinaryTree::postorder() const
 }
 
 BinaryTree::BinaryNode * BinaryTree::findSlot(BinaryNode * node) {
-	if (node->left_ == NULL && node->right_ == NULL) {
+	if ((node->left_ == NULL && node->right_ == NULL) || (node->left_ != NULL && node->right_ == NULL)) {
 		return node;
 	}
 	if (rightHeight(node) == leftHeight(node)) {
-		return leftmost(node);
+		return findSlot(node->left_);
 	}
-	
-	if (node->left_ != NULL && node->right_ == NULL) {
-		return node;
-	}
-	if (rightHeight(tree_) < leftHeight(tree_)) {
+	if (rightHeight(node) < leftHeight(node)) {
 		findSlot(node->right_);
 	}
+	
+	
 }
 
 int BinaryTree::rightHeight(BinaryNode * subtree) {
