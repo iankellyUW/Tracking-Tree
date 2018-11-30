@@ -257,8 +257,8 @@ BinaryTree::build(long levels)
 	for (long lev = 0; lev <= levels; lev++)
 	{
 		BinaryNode * parent = findSlot(tree_);
-		BinaryNode * lNode = new BinaryNode(parent->ID_, getString());
-		BinaryNode * rNode = new BinaryNode(parent->ID_, getString());
+		BinaryNode * lNode = new BinaryNode(parent->parentID_, getString());
+		BinaryNode * rNode = new BinaryNode(parent->parentID_, getString());
 		parent->left_ = lNode;
 		parent->right_ = rNode;
 	}
