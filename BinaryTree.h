@@ -1,18 +1,20 @@
-// BinaryTree.h
-
-// A binary tree class using an embedded class for the nodes.
-// All code is implemented here in the .h file.
-
-// tom bailey   26 mar 01
-
-// cleaned for lab use
-// tom bailey   0820  18 oct 2010
-// tom bailey   0850  4 apr 2011
-
-
+/*
+* Merkle Tree Project
+* By Ian Kelly, William Cary, and Justin Blakeman
+* November 26, 2018
+*
+*/
 #ifndef _BIN_TREE_H_
 #define _BIN_TREE_H_
-
+/**
+**leftmost()
+**rightmost()
+**rightHeight()
+**leftHeight()
+**preorder()
+**postorder()
+**leaves()
+**/
 
 #include "RandomUtilities.h"
 #include "Hash.h"
@@ -81,59 +83,28 @@ public:
 	// The destructor deallocates all the nodes in the tree.
 	~BinaryTree();
 
-
 	// Mutators
-
-	// Destroy the current BinaryTree and build a randomly
-	//   shaped tree of size nodes.  Node entries are
-	//   successive shorts stored in the tree in
-	//   preorder.
 	void addNode(string dataEvent);
 
 	void build(long levels);
 
-	// Accessors
+	void update(BinaryNode*) const;
 
-	// Display the tree.
-	// The node values are listed using an inorder
-	//   traversal.
-	// Node values are indented by the depth of the node to
-	//   display the shape of the tree.
-	// The tree shape is displayed with the left subtree at
-	//   the top of the screen.
-	void display(std::ostream& outfile) const;
-
-
-	// Several tree measures, special values, and traversals
-
+	// Several tree measures, special values, B-Tree commands
 	long size() const;
 
 	long height() const;
 
-	long leaves() const;
-
-	
-
 	void print(BinaryNode*);
 
-	void update(BinaryNode*) const;
+	void display(std::ostream& outfile) const;
 
-
-	BinaryNode * leftmost() const;
-
-	std::vector< string > preorder() const;
-
-	std::vector< string > postorder() const;
-	
 	BinaryNode * findSlot() const;
-	int rightHeight() const;
-	int leftHeight() const;
 
 	BinaryNode * search(string sch);
 
 private:
 	BinaryNode * tree_;
-	static int btEntry_;
 
 private:
 	// Disable operator=
@@ -153,12 +124,9 @@ private:
 	//   subtree referenced by a pointer to its root node.
 	//   The empty subtree is indicated by a NULL pointer.
 
-
 	// Delete all nodes referenced via subtree.
 	// Set subtree to NULL.
 	static void destroy(BinaryNode * & subtree);
-
-
 
 	// This subtree is a left subtree.
 	// Display the nodes connected to subtree on outfile.
@@ -176,49 +144,24 @@ private:
 	static void displayRight(std::ostream & outfile,
 		BinaryNode * subtree, std::string prefix);
 
-
 	// Return the number of nodes in the tree accessed by
 	//   subtree.
 	static long size(const BinaryNode * subtree);
 
-
 	// Return the height of the tree accessed by subtree.
 	static long height(const BinaryNode * subtree);
-
-
-	// Return the number of leaves in the tree accessed by
-	//   subtree.
-	static long leaves(const BinaryNode * subtree);
-
 
 	// pre:  this BinaryTree subtree is not empty.
 	// Return the value in the leftmost node in the tree 
 	//   accessed by subtree.
-	static BinaryNode * leftmost(BinaryNode * subtree);
-
-	// Write the values stored in the tree accessed by
-	//   subtree.  Write the values to outfile.  Write the
-	//   values in preorder.
-	static void preorder(std::vector< string > & traversal,
-		const BinaryNode * subtree);
-
-	static void postorder(std::vector< string > & traversal,
-		const BinaryNode * subtree);
-
 	static BinaryNode * findSlot(BinaryNode * subtree);
-	static int rightHeight(BinaryNode * subtree);
-	static int leftHeight(BinaryNode * subtree);
 
 	static BinaryNode * search(string ID, BinaryNode* subtree);
 
 	static void percolate(BinaryNode * subtree);
+
 	static void percolateDown(BinaryNode * subtree);
 };
-
-
-// Set the initial value of the static binary tree entry.
-int BinaryTree::btEntry_ = 1;
-
 
 // Code for public methods of BinaryTree
 // **********************************
@@ -229,27 +172,13 @@ BinaryTree::BinaryTree()
 {
 }
 
-
 // The destructor deallocates all the nodes in the tree.
 BinaryTree:: ~BinaryTree()
 {
 	destroy(tree_);
 }
 
-
-// BinaryTree methods
-// Each method is converted to a call to one of the helper
-//   functions.  The pointer to the tree root BinaryNode, tree_,
-//   is passed to the helper function as an additional
-//   parameter.  The additional parameter changes the 
-//   signature, so the same method/function name can be 
-//   used.  The helper functions do not need access to the
-//   entire tree, so they are declared static, meaning the
-//   object pointer passed to non-static methods is not 
-//   passed to these helper methods.
-	
-
-// inserts node in left most place
+// Inserts node in the leftmost place at the right level
 void BinaryTree::addNode(string dataEvent)
 {
 	BinaryNode * parent = findSlot(tree_);
@@ -288,7 +217,6 @@ BinaryTree::build(long levels)
 	}
 }
 
-
 // Display the tree.
 // The node values are ordered using an inorder traversal.
 // Node values are indented by the depth of the node to display
@@ -309,20 +237,12 @@ BinaryTree::display(std::ostream& outfile) const
 	}
 }
 
-
 long
 BinaryTree::height() const
 {
 	return  height(tree_);
 }
 
-int BinaryTree::rightHeight() const {
-	return rightHeight(tree_);
-}
-
-int BinaryTree::leftHeight() const {
-	return leftHeight(tree_);
-}
 
 BinaryTree::BinaryNode * BinaryTree::search(string sch)
 {
@@ -337,12 +257,6 @@ BinaryTree::size() const
 
 BinaryTree::BinaryNode * BinaryTree::findSlot() const {
 	return findSlot(tree_);
-}
-
-long
-BinaryTree::leaves() const
-{
-	return  leaves(tree_);
 }
 
 BinaryTree::BinaryNode * BinaryTree::search(string ID, BinaryNode * subtree)
@@ -421,12 +335,6 @@ void BinaryTree::update(BinaryNode * node) const
 	percolateDown(node);
 }
 
-
-BinaryTree::BinaryNode * BinaryTree::leftmost() const
-{
-	return  leftmost(tree_);
-}
-
 void BinaryTree::percolate(BinaryNode * subtree) {
 	if (subtree->parent_ == NULL)
 		return;
@@ -464,22 +372,6 @@ void BinaryTree::percolateDown(BinaryNode * subtree)
 
 }
 
-std::vector< string >
-BinaryTree::preorder() const
-{
-	std::vector< string > traversal;
-	preorder(traversal, tree_);
-	return traversal;
-}
-
-std::vector< string >
-BinaryTree::postorder() const
-{
-	std::vector< string > traversal;
-	postorder(traversal, tree_);
-	return traversal;
-}
-
 BinaryTree::BinaryNode * BinaryTree::findSlot(BinaryNode * node) {
 	if ((node->left_ == NULL && node->right_ == NULL) || (node->left_ != NULL && node->right_ == NULL)) {
 		return node;
@@ -490,34 +382,9 @@ BinaryTree::BinaryNode * BinaryTree::findSlot(BinaryNode * node) {
 	if (height(node->right_) < height(node->left_)) {
 		findSlot(node->right_);
 	}
-
-	
-	
 }
 
-int BinaryTree::rightHeight(BinaryNode * subtree) {
-	int height = 0;
-	if (subtree != NULL) {
-		height = 1;
-		height += rightHeight(subtree->right_);
-	}
-	else {
-		return height;
-	}
-}
-
-int BinaryTree::leftHeight(BinaryNode * subtree) {
-	int height = 0;
-	if (subtree != NULL) {
-		height = 1;
-		height += leftHeight(subtree->left_);
-	}
-	else {
-		return height;
-	}
-}
-
-// code for helper functions
+// Helper Functions
 
 // Delete all nodes connected to subtree
 void
@@ -552,7 +419,6 @@ BinaryTree::displayLeft(std::ostream & outfile,
 	}
 }
 
-
 // Display the nodes connected to subtree.
 // This is a right subtree.
 // Use a line by line display, order nodes from left to
@@ -573,7 +439,6 @@ BinaryTree::displayRight(std::ostream & outfile,
 	}
 }
 
-
 long
 BinaryTree::size(const BinaryNode * subtree)
 {
@@ -589,7 +454,6 @@ BinaryTree::size(const BinaryNode * subtree)
 	}
 	return thing;
 }
-
 
 long
 BinaryTree::height(const BinaryNode * subtree)
@@ -614,69 +478,5 @@ BinaryTree::height(const BinaryNode * subtree)
 		return rThing;
 	}
 }
-
-
-long
-BinaryTree::leaves(const BinaryNode * subtree)
-{
-	long thing = 0;
-	if (subtree->left_ == NULL && subtree->right_ == NULL)
-	{
-		thing = 1;
-	}
-	else {
-		if (subtree->left_ != NULL) {
-			thing += leaves(subtree->left_);
-		}
-		if (subtree->right_ != NULL) {
-			thing += leaves(subtree->right_);
-		}
-	}
-	return thing;
-}
-
-
-BinaryTree::BinaryNode * BinaryTree::leftmost(BinaryNode * subtree)
-{
-	if (subtree->left_ != NULL) {
-		leftmost(subtree->left_);
-	}
-	else {
-		return subtree;
-	}
-}
-
-
-void
-BinaryTree::preorder(std::vector< string > & traversal,
-	const BinaryNode * subtree)
-{
-	if (subtree != NULL)
-	{
-		traversal.push_back(subtree->rawEvent_);
-		preorder(traversal, subtree->left_);
-		preorder(traversal, subtree->right_);
-	}
-}
-
-void
-BinaryTree::postorder(std::vector< string > & traversal,
-	const BinaryNode * subtree)
-{
-	if (subtree->left_ == NULL && subtree->right_ == NULL) {
-		traversal.push_back(subtree->rawEvent_);
-	}
-	else {
-		if (subtree->left_ != NULL) {
-			postorder(traversal, subtree->left_);
-		}
-		if (subtree->right_ != NULL) {
-			postorder(traversal, subtree->right_);
-		}
-		traversal.push_back(subtree->rawEvent_);
-	}
-}
-
-
 
 #endif

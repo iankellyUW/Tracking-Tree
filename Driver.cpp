@@ -1,8 +1,14 @@
+/*
+* Merkle Tree Project
+* By Ian Kelly, William Cary, and Justin Blakeman
+* November 26, 2018
+*
+*/
+
 #include "Hash.h"
 #include "BinaryTree.h"
 #include "RandomUtilities.h"
 
-//#include "BinaryTreeDriver.h"
 #include <iostream>
 using std::cout;
 
@@ -15,16 +21,6 @@ getRequest(string & request)
 
 int main() {
 	int pause = 0;
-	Hash test1("lkjfaskdflasjlkdfjlasjdflasjdkfajskldfjoiajwkernvasdkfjasljflkads");
-	Hash test2("hahs");
-	Hash test3("1239dfakdfjj kfjdfkalsjiwero, dfaksd jieriqkjs The lkasjd lkf jCat and Dog when the the Park and shit o nthemselseves");
-	Hash test4("The cat and dog went to the park on 2248 Big Street Boulavard and shit on each other until the cat passed out and the dog was declared the winner");
-	Hash test5("abc");
-	Hash abcTest1("ABC");
-	Hash abcTest2("ABc");
-	Hash char17Test1("The Big Duck is ");
-	Hash char17Test2("the big duck is.");
-	randomizeSeed();
 	
 	cout << "random string 1: " << getString() << endl;
 	cout << "random string 2: " << getString() << endl;
@@ -97,9 +93,9 @@ int main() {
 		}
 		else
 		{
-			cout << "Known requests: build <size>, display, size, "
-				<< "height, leaves," << endl;
-			cout << "                leftmost, preorder, quit" << endl;
+			cout << "Known requests: build <size>, append <raw event>, display, size, "
+				<< "height, leaves, " << endl;
+			cout << "                leftmost, preorder, quit, print <ID>, update <ID>" << endl;
 		}
 
 		getRequest(request);

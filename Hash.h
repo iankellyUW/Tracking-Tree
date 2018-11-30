@@ -1,3 +1,10 @@
+/*
+* Merkle Tree Project
+* By Ian Kelly, William Cary, and Justin Blakeman
+* November 26, 2018
+*
+*/
+
 #pragma once
 #include <string>
 #include <iostream>
