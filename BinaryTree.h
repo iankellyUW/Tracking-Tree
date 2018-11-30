@@ -122,6 +122,7 @@ public:
 	BinaryNode * findSlot() const;
 	int rightHeight() const;
 	int leftHeight() const;
+
 private:
 	BinaryNode * tree_;
 	static int btEntry_;
@@ -207,8 +208,6 @@ private:
 	static int rightHeight(BinaryNode * subtree);
 	static int leftHeight(BinaryNode * subtree);
 
-	static void percolate(BinaryNode * subtree);
-
 };
 
 
@@ -250,11 +249,6 @@ void BinaryTree::addNode(string dataEvent)
 {
 	BinaryNode * parent = findSlot(tree_);
 	BinaryNode * newNode = new BinaryNode(tree_->ID_, dataEvent, parent);
-	if (parent->left_ == NULL) 
-		parent->left_ = newNode;
-	else
-		parent->right_ = newNode;
-
 }
 
 void
@@ -265,13 +259,17 @@ BinaryTree::build(long levels)
 		BinaryNode * tree = new BinaryNode(id, getString(), NULL);
 		tree_ = tree;
 	}
-	for (long lev = 0; lev <= levels; lev++)
+	for (long lev = 0; height() < levels; lev++)
 	{
 		BinaryNode * parent = findSlot(tree_);
 		BinaryNode * lNode = new BinaryNode(parent->ID_, getString(), parent);
 		BinaryNode * rNode = new BinaryNode(parent->ID_, getString(), parent);
-		parent->left_ = lNode;
-		parent->right_ = rNode;
+		if (parent->left_ == NULL) {
+			parent->left_ = lNode;
+		}
+		if (parent->right_ == NULL) {
+			parent->right_ = rNode;
+		}
 	}
 }
 
@@ -332,15 +330,6 @@ BinaryTree::BinaryNode * BinaryTree::leftmost() const
 	return  leftmost(tree_);
 }
 
-void BinaryTree::percolate(BinaryNode * subtree) {
-	if (subtree->parent_ == NULL)
-		return;
-	string content = "";
-	content += subtree->ID_.getHashval() + subtree->lHash_.getHashval() + subtree->rHash_.getHashval() + subtree->parentID_.getHashval();
-	if (subtree->parent_ == subtree->parent_->left_) {
-		content += subtree->ID_.getHashval() + subtree->lHash_.getHashval() + subtree->rHash_.getHashval() + subtree->parentID_.getHashval();
-	}
-}
 
 std::vector< string >
 BinaryTree::preorder() const
