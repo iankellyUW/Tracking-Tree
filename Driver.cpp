@@ -39,9 +39,9 @@ int main() {
 	{
 		if (request == "build")
 		{
-			string treeSize;
+			long treeSize;
 			cin >> treeSize;
-			theTree.addNode(treeSize);
+			theTree.build(treeSize);
 		}
 
 		else if (request == "display")
@@ -71,7 +71,7 @@ int main() {
 
 		else if (request == "preorder")
 		{
-			vector< short > traversal = theTree.preorder();
+			vector< string > traversal = theTree.preorder();
 			cout << "preorder is ";
 			for (unsigned long i = 0; i<traversal.size(); ++i)
 			{

@@ -88,8 +88,9 @@ public:
 	//   shaped tree of size nodes.  Node entries are
 	//   successive shorts stored in the tree in
 	//   preorder.
-	void addNode(string dataEvent);
+	//void addNode(string dataEvent);
 
+	void build(long levels);
 
 	// Accessors
 
@@ -114,9 +115,9 @@ public:
 
 	BinaryNode * leftmost() const;
 
-	std::vector< short > preorder() const;
+	std::vector< string > preorder() const;
 
-	std::vector< short > postorder() const;
+	std::vector< string > postorder() const;
 	
 	BinaryNode * findSlot() const;
 	int rightHeight() const;
@@ -197,10 +198,10 @@ private:
 	// Write the values stored in the tree accessed by
 	//   subtree.  Write the values to outfile.  Write the
 	//   values in preorder.
-	static void preorder(std::vector< short > & traversal,
+	static void preorder(std::vector< string > & traversal,
 		const BinaryNode * subtree);
 
-	static void postorder(std::vector< short > & traversal,
+	static void postorder(std::vector< string > & traversal,
 		const BinaryNode * subtree);
 
 	static BinaryNode * findSlot(BinaryNode * subtree);
@@ -244,10 +245,23 @@ BinaryTree:: ~BinaryTree()
 
 
 // Build a randomly shaped tree of size nodes.
+//void
+//BinaryTree::addNode(string dataEvent)
+//{
+//	BinaryNode * newNode = new BinaryNode();
+//}
+
 void
-BinaryTree::addNode(string dataEvent)
+BinaryTree::build(long levels)
 {
-	BinaryNode * newNode = new BinaryNode();
+	for (long lev = 0; lev <= levels; lev++)
+	{
+		BinaryNode * parent = findSlot(tree_);
+		BinaryNode * lNode = new BinaryNode(parent->ID_, getString());
+		BinaryNode * rNode = new BinaryNode(parent->ID_, getString());
+		parent->left_ = lNode;
+		parent->right_ = rNode;
+	}
 }
 
 
@@ -266,7 +280,7 @@ BinaryTree::display(std::ostream& outfile) const
 	else
 	{
 		displayLeft(outfile, tree_->left_, "    ");
-		outfile << "---" << tree_->entry_ << std::endl;
+		outfile << "---" << tree_->rawEvent_ << std::endl;
 		displayRight(outfile, tree_->right_, "    ");
 	}
 }
@@ -308,18 +322,18 @@ BinaryTree::BinaryNode * BinaryTree::leftmost() const
 }
 
 
-std::vector< short >
+std::vector< string >
 BinaryTree::preorder() const
 {
-	std::vector< short > traversal;
+	std::vector< string > traversal;
 	preorder(traversal, tree_);
 	return traversal;
 }
 
-std::vector< short >
+std::vector< string >
 BinaryTree::postorder() const
 {
-	std::vector< short > traversal;
+	std::vector< string > traversal;
 	postorder(traversal, tree_);
 	return traversal;
 }
@@ -420,7 +434,7 @@ BinaryTree::displayLeft(std::ostream & outfile,
 	else
 	{
 		displayLeft(outfile, subtree->left_, prefix + "     ");
-		outfile << prefix + "/---" << subtree->entry_ << std::endl;
+		outfile << prefix + "/---" << subtree->rawEvent_ << std::endl;
 		displayRight(outfile, subtree->right_, prefix + "|    ");
 	}
 }
@@ -441,7 +455,7 @@ BinaryTree::displayRight(std::ostream & outfile,
 	else
 	{
 		displayLeft(outfile, subtree->left_, prefix + "|    ");
-		outfile << prefix + "\\---" << subtree->entry_ << std::endl;
+		outfile << prefix + "\\---" << subtree->rawEvent_ << std::endl;
 		displayRight(outfile, subtree->right_, prefix + "     ");
 	}
 }
@@ -521,23 +535,23 @@ BinaryTree::BinaryNode * BinaryTree::leftmost(BinaryNode * subtree)
 
 
 void
-BinaryTree::preorder(std::vector< short > & traversal,
+BinaryTree::preorder(std::vector< string > & traversal,
 	const BinaryNode * subtree)
 {
 	if (subtree != NULL)
 	{
-		traversal.push_back(subtree->entry_);
+		traversal.push_back(subtree->rawEvent_);
 		preorder(traversal, subtree->left_);
 		preorder(traversal, subtree->right_);
 	}
 }
 
 void
-BinaryTree::postorder(std::vector< short > & traversal,
+BinaryTree::postorder(std::vector< string > & traversal,
 	const BinaryNode * subtree)
 {
 	if (subtree->left_ == NULL && subtree->right_ == NULL) {
-		traversal.push_back(subtree->entry_);
+		traversal.push_back(subtree->rawEvent_);
 	}
 	else {
 		if (subtree->left_ != NULL) {
@@ -546,7 +560,7 @@ BinaryTree::postorder(std::vector< short > & traversal,
 		if (subtree->right_ != NULL) {
 			postorder(traversal, subtree->right_);
 		}
-		traversal.push_back(subtree->entry_);
+		traversal.push_back(subtree->rawEvent_);
 	}
 }
 
