@@ -245,10 +245,18 @@ BinaryTree:: ~BinaryTree()
 
 
 // Build a randomly shaped tree of size nodes.
+<<<<<<< HEAD
 void BinaryTree::addNode(string dataEvent)
 {
 	BinaryTree create;
 	create.parentID = tree_->parent_;
+=======
+void
+BinaryTree::addNode(string dataEvent);
+{
+	BinaryTree create;
+	create->parent_ = tree_->parentID_;
+>>>>>>> parent of 120ff8b... made updates to Binary Tree and Driver
 	tree_->left_ = create.tree_;
 }
 
