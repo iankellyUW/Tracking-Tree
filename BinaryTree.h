@@ -256,6 +256,9 @@ BinaryTree::addNode(string dataEvent);
 {
 	BinaryTree create;
 	create->parent_ = tree_->parentID_;
+<<<<<<< HEAD
+>>>>>>> parent of 120ff8b... made updates to Binary Tree and Driver
+=======
 >>>>>>> parent of 120ff8b... made updates to Binary Tree and Driver
 	tree_->left_ = create.tree_;
 }
