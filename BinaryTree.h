@@ -301,7 +301,7 @@ BinaryTree::display(std::ostream& outfile) const
 	else
 	{
 		displayLeft(outfile, tree_->left_, "    ");
-		outfile << "---" << tree_->rHash_.getHashval() << std::endl;
+		outfile << "---" << tree_->ID_ << std::endl;
 		displayRight(outfile, tree_->right_, "    ");
 	}
 }
@@ -441,7 +441,7 @@ BinaryTree::displayLeft(std::ostream & outfile,
 	else
 	{
 		displayLeft(outfile, subtree->left_, prefix + "     ");
-		outfile << prefix + "/---" << subtree->lHash_.getHashval() << std::endl;
+		outfile << prefix + "/---" << subtree->ID_ << std::endl;
 		displayRight(outfile, subtree->right_, prefix + "|    ");
 	}
 }
@@ -462,7 +462,7 @@ BinaryTree::displayRight(std::ostream & outfile,
 	else
 	{
 		displayLeft(outfile, subtree->left_, prefix + "|    ");
-		outfile << prefix + "\\---" << subtree->rHash_.getHashval() << std::endl;
+		outfile << prefix + "\\---" << subtree->ID_ << std::endl;
 		displayRight(outfile, subtree->right_, prefix + "     ");
 	}
 }
