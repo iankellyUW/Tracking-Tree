@@ -260,6 +260,11 @@ void BinaryTree::addNode(string dataEvent)
 void
 BinaryTree::build(long levels)
 {
+	if (tree_ == NULL) {
+		Hash id;
+		BinaryNode * tree = new BinaryNode(id, getString(), NULL);
+		tree_ = tree;
+	}
 	for (long lev = 0; lev <= levels; lev++)
 	{
 		BinaryNode * parent = findSlot(tree_);
