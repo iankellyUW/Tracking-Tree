@@ -112,7 +112,7 @@ public:
 
 	long leaves() const;
 
-	BinaryNode * search(string ID, BinaryNode* subtree);
+	
 
 	void print(BinaryNode*);
 
@@ -209,6 +209,8 @@ private:
 	static int rightHeight(BinaryNode * subtree);
 	static int leftHeight(BinaryNode * subtree);
 
+	static BinaryNode * search(string ID, BinaryNode* subtree);
+
 	static void percolate(BinaryNode * subtree);
 	static void percolateDown(BinaryNode * subtree);
 };
@@ -256,7 +258,7 @@ void BinaryTree::addNode(string dataEvent)
 		parent->left_ = newNode;
 	}
 	else {
-		parent->right_ = newNode;
+	parent->right_ = newNode;
 	}
 	percolate(newNode);
 }
@@ -270,7 +272,7 @@ BinaryTree::build(long levels)
 		BinaryNode * tree = new BinaryNode(id, getString(), NULL);
 		tree_ = tree;
 	}
-	while (height() < levels )
+	while (height() < levels)
 	{
 		BinaryNode * parent = findSlot(tree_);
 		BinaryNode * lNode = new BinaryNode(parent->ID_, getString(), parent);
@@ -345,42 +347,77 @@ BinaryTree::leaves() const
 
 BinaryTree::BinaryNode * BinaryTree::search(string ID, BinaryNode * subtree)
 {
+	BinaryNode * left = subtree;
+	BinaryNode * right = subtree;
 	if (subtree != NULL) {
-		if (subtree->ID_.getHashval() == ID) {
+		if (subtree->ID_.getHashval().compare(ID) == 0) {
 			return subtree;
 		}
-		search(ID, subtree->left_);
-		search(ID, subtree->right_);
+		if (subtree->left_ != NULL) {
+			left = search(ID, subtree->left_);
+		}
+		if (subtree->right_ != NULL) {
+			right = search(ID, subtree->right_);
+		}
+		if (left != NULL) {
+			if (left->ID_.getHashval().compare(ID) == 0) {
+				return left;
+			}
+		}
+		if (right != NULL) {
+			if (right->ID_.getHashval().compare(ID) == 0) {
+				return right;
+			}
+		}
+
 	}
+	return NULL;
 }
 
 void BinaryTree::print(BinaryNode * subtree)
 {
+	if (subtree == NULL) {
+		cout << "Invalid ID" << endl;
+		return;
+	}
 	cout << "ID: " << subtree->ID_.getHashval() << endl;
 	cout << "Parent ID: " << subtree->parentID_.getHashval() << endl;
 	cout << "Raw Event: " << subtree->rawEvent_ << endl;
 	cout << "Left Hash: " << subtree->lHash_.getHashval() << endl;
 	cout << "Right Hash: " << subtree->rHash_.getHashval() << endl;
 	if (!subtree->lHist.empty()) {
-		cout << "Left History: ";
-		for (vector<Hash>::iterator it = subtree->lHist.begin(); it != subtree->lHist.end(); it++) {
-			cout << it->getHashval() << " + ";
+		cout << "Left History: " << subtree->lHist.front().getHashval();
+		if (subtree->lHist.size() > 2) {
+			for (vector<Hash>::iterator it = subtree->lHist.begin() + 1; it != subtree->lHist.end(); it++) {
+				cout << " + " << it->getHashval();
+			}
 		}
+
 	}
+	cout << endl;
 	if (!subtree->rHist.empty()) {
-		cout << endl << "Right History: ";
-		for (vector<Hash>::iterator it = subtree->rHist.begin(); it != subtree->rHist.end(); it++) {
-			cout << it->getHashval() << " + ";
+		cout << endl << "Right History: " << subtree->rHist.front().getHashval();
+		if (subtree->rHist.size() > 2) {
+			for (vector<Hash>::iterator it = subtree->rHist.begin() + 1; it != subtree->rHist.end(); it++) {
+				cout << " + " << it->getHashval();
+			}
 		}
+
+		cout << endl;
 	}
 }
 
 void BinaryTree::update(BinaryNode * node) const
 {
+	if (node == NULL) {
+		cout << "Invalid ID" << endl;
+		return;
+	}
 	string update = "";
-	cout << "Please enter new data: " << endl;
+	cout << "Please enter new data: ";
 	cin >> update;
-	node->rawEvent_ = update.substr(1024);
+	node->rawEvent_ = update;
+	node->ID_.getHash(update);
 	percolateDown(node);
 }
 
