@@ -261,9 +261,11 @@ BinaryTree::build(long levels)
 		BinaryNode * tree = new BinaryNode(id, getString(), NULL);
 		tree_ = tree;
 	}
-	for (long lev = 0; height() < levels; lev++)
+	while (height() < levels )
 	{
 		BinaryNode * parent = findSlot(tree_);
+		cout << "Right Height" << rightHeight() << endl;
+		cout << "Left Height" << leftHeight() << endl;
 		BinaryNode * lNode = new BinaryNode(parent->ID_, getString(), parent);
 		BinaryNode * rNode = new BinaryNode(parent->ID_, getString(), parent);
 		if (parent->left_ == NULL) {
