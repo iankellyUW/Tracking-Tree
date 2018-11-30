@@ -246,10 +246,10 @@ BinaryTree:: ~BinaryTree()
 
 // Build a randomly shaped tree of size nodes.
 void
-BinaryTree::addNode(string dataEvent);
+BinaryTree::addNode(string dataEvent)
 {
 	BinaryTree create;
-	create->parent_ = tree_->parentID_;
+	create.tree_->parent_ = tree_;
 	tree_->left_ = create.tree_;
 }
 
