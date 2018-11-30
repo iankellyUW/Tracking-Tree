@@ -39,9 +39,9 @@ int main() {
 	{
 		if (request == "build")
 		{
-			long treeSize;
+			string treeSize;
 			cin >> treeSize;
-			theTree.build(treeSize);
+			theTree.addNode(treeSize);
 		}
 
 		else if (request == "display")
