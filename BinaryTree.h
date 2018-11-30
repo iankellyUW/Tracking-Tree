@@ -53,7 +53,7 @@ protected:
 		BinaryNode * parent_;
 
 	public:
-		BinaryNode(Hash parentID, string rawEvent, short entry = 0, BinaryNode* left = NULL, BinaryNode* right = NULL)
+		BinaryNode(Hash parentID, string rawEvent, BinaryNode* left = NULL, BinaryNode* right = NULL)
 			: entry_(entry), left_(left), right_(right), parentID_(parentID), rawEvent_(rawEvent)
 		{
 			string parentEvent = rawEvent + parentID_.getHashval();
@@ -248,9 +248,7 @@ BinaryTree:: ~BinaryTree()
 void
 BinaryTree::addNode(string dataEvent)
 {
-	BinaryTree create;
-	create.tree_->parent_ = tree_;
-	tree_->left_ = create.tree_;
+	BinaryNode * newNode = new BinaryNode();
 }
 
 
