@@ -21,11 +21,6 @@ Hash::Hash(string toHash)
 {
 	getHash(toHash);
 	//*Test: retrieves hashval and outputs it too console
-	cout << "hashval: ";
-	for (int i = 0; i < HASH_SIZE; i++) {
-		cout << hashval[i];
-	}
-	cout << endl;
 	//End test
 }
 

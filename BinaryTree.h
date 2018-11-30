@@ -294,13 +294,13 @@ void BinaryTree::print(BinaryNode * subtree)
 		cout << "Invalid ID" << endl;
 		return;
 	}
-	cout << "ID: " << subtree->ID_.getHashval() << endl;
-	cout << "Parent ID: " << subtree->parentID_.getHashval() << endl;
-	cout << "Raw Event: " << subtree->rawEvent_ << endl;
-	cout << "Left Hash: " << subtree->lHash_.getHashval() << endl;
-	cout << "Right Hash: " << subtree->rHash_.getHashval() << endl;
+	cout << "*ID:         " << subtree->ID_.getHashval() << endl;
+	cout << "*Parent ID:  " << subtree->parentID_.getHashval() << endl << endl;
+	cout << "*Raw Event:  " << subtree->rawEvent_ << endl << endl;
+	cout << "*Left Hash:  " << subtree->lHash_.getHashval() << endl;
+	cout << "*Right Hash: " << subtree->rHash_.getHashval() << endl;
 	if (!subtree->lHist.empty()) {
-		cout << "Left History: " << subtree->lHist.front().getHashval();
+		cout << "*Left History: " << subtree->lHist.front().getHashval();
 		if (subtree->lHist.size() > 2) {
 			for (vector<Hash>::iterator it = subtree->lHist.begin() + 1; it != subtree->lHist.end(); it++) {
 				cout << " + " << it->getHashval();
@@ -310,14 +310,13 @@ void BinaryTree::print(BinaryNode * subtree)
 	}
 	cout << endl;
 	if (!subtree->rHist.empty()) {
-		cout << endl << "Right History: " << subtree->rHist.front().getHashval();
+		cout << "*Right History: " << subtree->rHist.front().getHashval();
 		if (subtree->rHist.size() > 2) {
 			for (vector<Hash>::iterator it = subtree->rHist.begin() + 1; it != subtree->rHist.end(); it++) {
 				cout << " + " << it->getHashval();
 			}
 		}
-
-		cout << endl;
+		cout << endl << endl;
 	}
 }
 
