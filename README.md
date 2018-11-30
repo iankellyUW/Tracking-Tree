@@ -1,6 +1,6 @@
 ## Tracking-Tree -- Merkle Tree (Binary Hash Tree) Project for computer science 2030
 
-Collaborators: Ian Kelly, William Cary, Justin Blakeman
+# Collaborators: Ian Kelly, William Cary, Justin Blakeman
 
 #
 
