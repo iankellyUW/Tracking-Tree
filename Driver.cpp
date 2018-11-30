@@ -68,6 +68,11 @@ int main() {
 		{
 			cout << "leftmost is " << theTree.leftmost() << endl;
 		}
+		else if (request == "append") {
+			string input = "";
+			cin >> input;
+			theTree.addNode(input);
+		}
 
 		else if (request == "preorder")
 		{

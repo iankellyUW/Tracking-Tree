@@ -246,16 +246,24 @@ BinaryTree:: ~BinaryTree()
 //   passed to these helper methods.
 	
 
-// Build a randomly shaped tree of size nodes.
+// inserts node in left most place
 void BinaryTree::addNode(string dataEvent)
 {
 	BinaryNode * parent = findSlot(tree_);
 	BinaryNode * newNode = new BinaryNode(tree_->ID_, dataEvent, parent);
+	if (parent->left_ == NULL) {
+		parent->left_ = newNode;
+	}
+	else {
+		parent->right_ = newNode;
+	}
+	percolate(newNode);
 }
 
 void
 BinaryTree::build(long levels)
 {
+	destroy(tree_);
 	if (tree_ == NULL) {
 		Hash id("");
 		BinaryNode * tree = new BinaryNode(id, getString(), NULL);
@@ -264,15 +272,15 @@ BinaryTree::build(long levels)
 	while (height() < levels )
 	{
 		BinaryNode * parent = findSlot(tree_);
-		cout << "Right Height" << rightHeight() << endl;
-		cout << "Left Height" << leftHeight() << endl;
 		BinaryNode * lNode = new BinaryNode(parent->ID_, getString(), parent);
 		BinaryNode * rNode = new BinaryNode(parent->ID_, getString(), parent);
 		if (parent->left_ == NULL) {
 			parent->left_ = lNode;
+			percolate(lNode);
 		}
 		if (parent->right_ == NULL) {
 			parent->right_ = rNode;
+			percolate(rNode);
 		}
 	}
 }
@@ -293,7 +301,7 @@ BinaryTree::display(std::ostream& outfile) const
 	else
 	{
 		displayLeft(outfile, tree_->left_, "    ");
-		outfile << "---" << tree_->ID_.getHashval() << std::endl;
+		outfile << "---" << tree_->rHash_.getHashval() << std::endl;
 		displayRight(outfile, tree_->right_, "    ");
 	}
 }
@@ -339,9 +347,15 @@ void BinaryTree::percolate(BinaryNode * subtree) {
 		return;
 	string content = "";
 	content += subtree->ID_.getHashval() + subtree->lHash_.getHashval() + subtree->rHash_.getHashval() + subtree->parentID_.getHashval();
-	if (subtree->parent_ == subtree->parent_->left_) {
-		content += subtree->ID_.getHashval() + subtree->lHash_.getHashval() + subtree->rHash_.getHashval() + subtree->parentID_.getHashval();
+	if (subtree == subtree->parent_->left_) {
+		subtree->parent_->lHash_.getHash(content);
+		subtree->parent_->lHist.push_back(subtree->parent_->lHash_);
 	}
+	else {
+		subtree->parent_->rHash_.getHash(content);
+		subtree->parent_->rHist.push_back(subtree->parent_->rHash_);
+	}
+	percolate(subtree->parent_);
 }
 
 std::vector< string >
@@ -364,12 +378,13 @@ BinaryTree::BinaryNode * BinaryTree::findSlot(BinaryNode * node) {
 	if ((node->left_ == NULL && node->right_ == NULL) || (node->left_ != NULL && node->right_ == NULL)) {
 		return node;
 	}
-	if (rightHeight(node) == leftHeight(node)) {
+	if (height(node->right_) == height(node->left_)) {
 		return findSlot(node->left_);
 	}
-	if (rightHeight(node) < leftHeight(node)) {
+	if (height(node->right_) < height(node->left_)) {
 		findSlot(node->right_);
 	}
+
 	
 	
 }
@@ -411,28 +426,6 @@ BinaryTree::destroy(BinaryNode * & subtree)
 	}
 }
 
-
-// Build a random shaped tree of size nodes.
-// Construct the BinaryNodes in preorder sequence.
-void
-BinaryTree::buildRandom(long size, BinaryNode * & subtree)
-{
-	/*if (size == 0)
-	{
-		subtree = NULL;
-	}
-	else
-	{
-		subtree = new BinaryNode(btEntry_);
-		btEntry_++;
-		long leftSize = 0;
-		buildRandom(leftSize, subtree->left_);
-		long rightSize = size - 1 - leftSize;
-		buildRandom(rightSize, subtree->right_);
-	}*/
-}
-
-
 // Display the nodes connected to subtree.
 // This is a left subtree.
 // Use a line by line display, order nodes from left to
@@ -448,7 +441,7 @@ BinaryTree::displayLeft(std::ostream & outfile,
 	else
 	{
 		displayLeft(outfile, subtree->left_, prefix + "     ");
-		outfile << prefix + "/---" << subtree->ID_.getHashval() << std::endl;
+		outfile << prefix + "/---" << subtree->lHash_.getHashval() << std::endl;
 		displayRight(outfile, subtree->right_, prefix + "|    ");
 	}
 }
@@ -469,7 +462,7 @@ BinaryTree::displayRight(std::ostream & outfile,
 	else
 	{
 		displayLeft(outfile, subtree->left_, prefix + "|    ");
-		outfile << prefix + "\\---" << subtree->ID_.getHashval() << std::endl;
+		outfile << prefix + "\\---" << subtree->rHash_.getHashval() << std::endl;
 		displayRight(outfile, subtree->right_, prefix + "     ");
 	}
 }
