@@ -112,6 +112,12 @@ public:
 
 	long leaves() const;
 
+	BinaryNode * search(string ID, BinaryNode* subtree);
+
+	void print(BinaryNode*);
+
+	void update(BinaryNode*) const;
+
 
 	BinaryNode * leftmost() const;
 
@@ -122,6 +128,8 @@ public:
 	BinaryNode * findSlot() const;
 	int rightHeight() const;
 	int leftHeight() const;
+
+	BinaryNode * search(string sch);
 
 private:
 	BinaryNode * tree_;
@@ -150,12 +158,6 @@ private:
 	// Set subtree to NULL.
 	static void destroy(BinaryNode * & subtree);
 
-
-	// Build a random shaped tree of size nodes. 
-	//   The tree data values start with entry.
-	//   subtree is set to point to this tree.
-	//   entry is increased by size.
-	static void buildRandom(long size, BinaryNode * & subtree);
 
 
 	// This subtree is a left subtree.
@@ -194,7 +196,6 @@ private:
 	//   accessed by subtree.
 	static BinaryNode * leftmost(BinaryNode * subtree);
 
-
 	// Write the values stored in the tree accessed by
 	//   subtree.  Write the values to outfile.  Write the
 	//   values in preorder.
@@ -209,7 +210,7 @@ private:
 	static int leftHeight(BinaryNode * subtree);
 
 	static void percolate(BinaryNode * subtree);
-
+	static void percolateDown(BinaryNode * subtree);
 };
 
 
@@ -301,7 +302,7 @@ BinaryTree::display(std::ostream& outfile) const
 	else
 	{
 		displayLeft(outfile, tree_->left_, "    ");
-		outfile << "---" << tree_->ID_ << std::endl;
+		outfile << "---" << tree_->ID_.getHashval() << std::endl;
 		displayRight(outfile, tree_->right_, "    ");
 	}
 }
@@ -320,6 +321,12 @@ int BinaryTree::rightHeight() const {
 int BinaryTree::leftHeight() const {
 	return leftHeight(tree_);
 }
+
+BinaryTree::BinaryNode * BinaryTree::search(string sch)
+{
+	return search(sch, tree_);
+}
+
 long
 BinaryTree::size() const
 {
@@ -334,6 +341,47 @@ long
 BinaryTree::leaves() const
 {
 	return  leaves(tree_);
+}
+
+BinaryTree::BinaryNode * BinaryTree::search(string ID, BinaryNode * subtree)
+{
+	if (subtree != NULL) {
+		if (subtree->ID_.getHashval() == ID) {
+			return subtree;
+		}
+		search(ID, subtree->left_);
+		search(ID, subtree->right_);
+	}
+}
+
+void BinaryTree::print(BinaryNode * subtree)
+{
+	cout << "ID: " << subtree->ID_.getHashval() << endl;
+	cout << "Parent ID: " << subtree->parentID_.getHashval() << endl;
+	cout << "Raw Event: " << subtree->rawEvent_ << endl;
+	cout << "Left Hash: " << subtree->lHash_.getHashval() << endl;
+	cout << "Right Hash: " << subtree->rHash_.getHashval() << endl;
+	if (!subtree->lHist.empty()) {
+		cout << "Left History: ";
+		for (vector<Hash>::iterator it = subtree->lHist.begin(); it != subtree->lHist.end(); it++) {
+			cout << it->getHashval() << " + ";
+		}
+	}
+	if (!subtree->rHist.empty()) {
+		cout << endl << "Right History: ";
+		for (vector<Hash>::iterator it = subtree->rHist.begin(); it != subtree->rHist.end(); it++) {
+			cout << it->getHashval() << " + ";
+		}
+	}
+}
+
+void BinaryTree::update(BinaryNode * node) const
+{
+	string update = "";
+	cout << "Please enter new data: " << endl;
+	cin >> update;
+	node->rawEvent_ = update.substr(1024);
+	percolateDown(node);
 }
 
 
@@ -356,6 +404,27 @@ void BinaryTree::percolate(BinaryNode * subtree) {
 		subtree->parent_->rHist.push_back(subtree->parent_->rHash_);
 	}
 	percolate(subtree->parent_);
+}
+
+void BinaryTree::percolateDown(BinaryNode * subtree)
+{
+	string concat = "";
+	concat += subtree->rawEvent_ + subtree->parentID_.getHashval();
+	subtree->ID_.getHash(concat);
+	if (subtree->left_ != NULL) {
+		subtree->left_->parentID_.getHash(concat);
+		percolateDown(subtree->left_);
+	}
+	if (subtree->right_ != NULL) {
+		subtree->right_->parentID_.getHash(concat);
+		percolateDown(subtree->right_);
+	}
+	string lPrev = subtree->lHash_.getHashval();
+	string rPrev = subtree->rHash_.getHashval();
+	if (subtree->left_ == NULL) {
+		percolate(subtree);
+	}
+
 }
 
 std::vector< string >
@@ -441,7 +510,7 @@ BinaryTree::displayLeft(std::ostream & outfile,
 	else
 	{
 		displayLeft(outfile, subtree->left_, prefix + "     ");
-		outfile << prefix + "/---" << subtree->ID_ << std::endl;
+		outfile << prefix + "/---" << subtree->ID_.getHashval() << std::endl;
 		displayRight(outfile, subtree->right_, prefix + "|    ");
 	}
 }
@@ -462,7 +531,7 @@ BinaryTree::displayRight(std::ostream & outfile,
 	else
 	{
 		displayLeft(outfile, subtree->left_, prefix + "|    ");
-		outfile << prefix + "\\---" << subtree->ID_ << std::endl;
+		outfile << prefix + "\\---" << subtree->ID_.getHashval() << std::endl;
 		displayRight(outfile, subtree->right_, prefix + "     ");
 	}
 }
@@ -570,5 +639,7 @@ BinaryTree::postorder(std::vector< string > & traversal,
 		traversal.push_back(subtree->rawEvent_);
 	}
 }
+
+
 
 #endif

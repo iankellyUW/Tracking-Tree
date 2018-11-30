@@ -73,7 +73,6 @@ int main() {
 			cin >> input;
 			theTree.addNode(input);
 		}
-
 		else if (request == "preorder")
 		{
 			vector< string > traversal = theTree.preorder();
@@ -84,7 +83,18 @@ int main() {
 			}
 			cout << endl;
 		}
-
+		else if (request == "print")
+		{
+			string input = "";
+			cin >> input;
+			theTree.print(theTree.search(input));
+		}
+		else if (request == "update")
+		{
+			string input = "";
+			cin >> input;
+			theTree.update(theTree.search(input));
+		}
 		else
 		{
 			cout << "Known requests: build <size>, display, size, "
