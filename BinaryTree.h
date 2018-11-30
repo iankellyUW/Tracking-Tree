@@ -50,6 +50,8 @@ protected:
 		BinaryNode * left_;
 		BinaryNode * right_;
 
+		BinaryNode * parent_;
+
 	public:
 		BinaryNode(Hash parentID, string rawEvent, short entry = 0, BinaryNode* left = NULL, BinaryNode* right = NULL)
 			: entry_(entry), left_(left), right_(right), parentID_(parentID), rawEvent_(rawEvent)
@@ -87,7 +89,7 @@ public:
 	//   shaped tree of size nodes.  Node entries are
 	//   successive shorts stored in the tree in
 	//   preorder.
-	void build(long size);
+	void addNode(string dataEvent);
 
 
 	// Accessors
@@ -244,9 +246,10 @@ BinaryTree:: ~BinaryTree()
 
 // Build a randomly shaped tree of size nodes.
 void
-BinaryTree::build(long size)
+BinaryTree::addNode(string dataEvent);
 {
 	BinaryTree create;
+	create.parentID = tree_->parent_;
 	tree_->left_ = create.tree_;
 }
 
