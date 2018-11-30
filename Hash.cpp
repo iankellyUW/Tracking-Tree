@@ -40,7 +40,11 @@ char Hash::getChar(string subset)
 
 string Hash::getHashval()
 {
-	return hashval;
+	string temp = "";
+	for (unsigned i = 0; i < HASH_SIZE; i++) {
+		temp += hashval[i];
+	}
+	return temp;
 }
 
 void Hash::getHash(string toHash) {

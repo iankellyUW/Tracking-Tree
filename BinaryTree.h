@@ -508,7 +508,7 @@ BinaryTree::height(const BinaryNode * subtree)
 		rThing = 0;
 		lThing = 0;
 	}
-	if (lThing > rThing) {
+	if (lThing < rThing) {
 		return lThing;
 	}
 	else {
