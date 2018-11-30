@@ -38,7 +38,6 @@ protected:
 	class BinaryNode
 	{
 	public:
-		short entry_;
 		string rawEvent_;
 		Hash parentID_;
 		Hash ID_;
@@ -53,8 +52,8 @@ protected:
 		BinaryNode * parent_;
 
 	public:
-		BinaryNode(Hash parentID, string rawEvent, BinaryNode* left = NULL, BinaryNode* right = NULL)
-			: entry_(entry), left_(left), right_(right), parentID_(parentID), rawEvent_(rawEvent)
+		BinaryNode(Hash parentID, string rawEvent, BinaryNode* left = NULL, BinaryNode* right = NULL) 
+			: left_(left), right_(right), parentID_(parentID), rawEvent_(rawEvent)
 		{
 			string parentEvent = rawEvent + parentID_.getHashval();
 			ID_.getHash(parentEvent);
