@@ -87,7 +87,7 @@ public:
 	//   shaped tree of size nodes.  Node entries are
 	//   successive shorts stored in the tree in
 	//   preorder.
-	void addNode(string dataEvent);
+	void build(long size);
 
 
 	// Accessors
@@ -244,7 +244,7 @@ BinaryTree:: ~BinaryTree()
 
 // Build a randomly shaped tree of size nodes.
 void
-BinaryTree::addNode(string dataEvent);
+BinaryTree::build(long size)
 {
 	BinaryTree create;
 	tree_->left_ = create.tree_;
