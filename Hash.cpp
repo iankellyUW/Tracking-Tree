@@ -19,20 +19,22 @@ Hash::~Hash()
 
 Hash::Hash(string toHash)
 {
-	getHash(toHash);
-	//*Test: retrieves hashval and outputs it too console
-	//End test
+	getHash(toHash); // constructors only job is to assign the hash value
 }
 
+
+// Retrieves 1/8 of the hash by adding all ASCII vals together and then moding
+// it by the set size and retrieving that character from the SET array.
 char Hash::getChar(string subset)
 {
-	int total = 0;
+	int total = 0; // the total character count for the substring passed to getChar
 	for (unsigned i = 0; i < subset.size(); i++) {
 		total += (int)subset[i];
 	}
 	return SET[total % SET_SIZE];
 }
 
+// returns the hash val as a string
 string Hash::getHashval()
 {
 	string temp = "";
