@@ -1,14 +1,12 @@
 // RandomUtilities.h
 
-// tom bailey   7 mar 03
-// Random Variate generation.
+// William Cary
+// Justin Blakeman
+// Ian Kelly
 
-// tom bailey   0900  21 feb 2012
-// Revisions to match current version of rand().
-
-// tom bailey   1420   23 mar 2012
-// Revision of the definition of randomInt.
-
+// Random utility header that creates a seed based on time
+// and uses that seed to make the string with the getString
+// Function.
 
 #ifndef _RANDOM_UTILITIES_H_
 #define _RANDOM_UTILITIES_H_
@@ -32,6 +30,9 @@ void randomizeSeed()
 		called = true;
 	}
 }
+
+// Used for building a tree of a particular height so that 
+// all nodes can be generated without user input.
 
 string getString() {
 	int stringSize = rand() % 1024;
